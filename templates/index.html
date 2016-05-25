@@ -2,5 +2,15 @@
 
 {% block content %}
 <h2>Home Page</h2>
-
+<div class = "row">
+ <ul>
+    {% for blog in blogs %}
+    <li>
+        <a href ="{% url "blog:detail" blog.pk %}">
+            {{ blog.title }}
+        </a>
+    </li>
+    {% endfor %}
+    </ul>
+</div>
 {% endblock %}
