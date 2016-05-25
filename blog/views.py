@@ -6,7 +6,8 @@ def index(request):
         'blogs' : Blog.objects.all()
     })
 
-def detail(reqeust, pk= None):
+def detail(request, pk= None):
     return render(request, 'detail.html', context = {
-
+        'blog' : Blog.objects.get(id=pk),
+        'comments' : Comment.objects.filter(blog_id=pk),
     })
