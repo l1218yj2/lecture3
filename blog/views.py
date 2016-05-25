@@ -7,7 +7,17 @@ def index(request):
     })
 
 def detail(request, pk= None):
-    return render(request, 'detail.html', context = {
-        'blog' : Blog.objects.get(id=pk),
-        'comments' : Comment.objects.filter(blog_id=pk),
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            content = form.cleaned_data['content']
+            Comment.objects.create(blog=Blog.objects.get(id=pk), content = content)
+
+    form = CommentForm()
+    return render(request, 'detail.html', context={
+
+        'blog':Blog.objects.get(id=pk),
+        'comments':Comment.objects.filter(blog__id=pk),
+        'form':form,
+
     })
